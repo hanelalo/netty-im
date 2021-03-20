@@ -19,6 +19,7 @@ public class SessionBinding {
   }
 
   public static void unbindSession(Channel channel){
+    channel.attr(Attributes.SESSION).set(null);
     USERID_CHANNEL_MAP.remove(channel.attr(Attributes.SESSION).get().getUserId());
   }
 

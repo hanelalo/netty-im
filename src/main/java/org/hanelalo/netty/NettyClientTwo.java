@@ -10,7 +10,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import org.hanelalo.netty.client.MessageThread;
 import org.hanelalo.netty.client.handler.LoginResponseHandler;
 import org.hanelalo.netty.client.handler.MessageResponseHandler;
-import org.hanelalo.netty.protocol.handler.HeartBeatHandler;
+import org.hanelalo.netty.client.handler.HeartBeatHandler;
+import org.hanelalo.netty.protocol.handler.HeartBeatResponseHandler;
 import org.hanelalo.netty.protocol.handler.PacketCodeCHandler;
 import org.hanelalo.netty.protocol.handler.Splitter;
 
@@ -35,6 +36,7 @@ public class NettyClientTwo {
                 ch.pipeline().addLast(PacketCodeCHandler.INSTANCE);
                 ch.pipeline().addLast(new LoginResponseHandler());
                 ch.pipeline().addLast(new HeartBeatHandler());
+                ch.pipeline().addLast(new HeartBeatResponseHandler());
                 ch.pipeline().addLast(new MessageResponseHandler());
               }
             })

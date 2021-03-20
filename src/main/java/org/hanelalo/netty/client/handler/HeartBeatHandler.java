@@ -1,4 +1,4 @@
-package org.hanelalo.netty.protocol.handler;
+package org.hanelalo.netty.client.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
