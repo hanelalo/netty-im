@@ -1,9 +1,12 @@
-package org.hanelalo.netty.protocol;
+package org.hanelalo.netty.protocol.handler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+import org.hanelalo.netty.protocol.Packet;
+import org.hanelalo.netty.protocol.PacketCodeC;
 
+@Deprecated
 public class PacketEncoder extends MessageToByteEncoder<Packet> {
 
   @Override

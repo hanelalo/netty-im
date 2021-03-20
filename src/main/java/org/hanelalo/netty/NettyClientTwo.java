@@ -7,14 +7,12 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import java.util.Scanner;
-import org.hanelalo.netty.api.MessageRequest;
+import org.hanelalo.netty.client.MessageThread;
 import org.hanelalo.netty.client.handler.LoginResponseHandler;
 import org.hanelalo.netty.client.handler.MessageResponseHandler;
-import org.hanelalo.netty.protocol.PacketDecoder;
-import org.hanelalo.netty.protocol.PacketEncoder;
-import org.hanelalo.netty.protocol.Splitter;
-import org.hanelalo.netty.client.LoginUtils;
+import org.hanelalo.netty.protocol.handler.HeartBeatHandler;
+import org.hanelalo.netty.protocol.handler.PacketCodeCHandler;
+import org.hanelalo.netty.protocol.handler.Splitter;
 
 public class NettyClientTwo {
 
@@ -34,11 +32,10 @@ public class NettyClientTwo {
               protected void initChannel(NioSocketChannel ch) throws Exception {
                 // 自动拆包
                 ch.pipeline().addLast(new Splitter(Integer.MAX_VALUE, 7, 4));
-                //                ch.pipeline().addLast(new FirstClientHandler());
-                ch.pipeline().addLast(new PacketDecoder());
+                ch.pipeline().addLast(PacketCodeCHandler.INSTANCE);
                 ch.pipeline().addLast(new LoginResponseHandler());
+                ch.pipeline().addLast(new HeartBeatHandler());
                 ch.pipeline().addLast(new MessageResponseHandler());
-                ch.pipeline().addLast(new PacketEncoder());
               }
             })
         .connect("127.0.0.1", 8000)
@@ -52,22 +49,6 @@ public class NettyClientTwo {
   }
 
   private static void startConsoleThread(Channel channel) {
-    new Thread(
-            () -> {
-              while (!Thread.interrupted()) {
-                if (LoginUtils.isLogin(channel)) {
-                  System.out.println("目标的 userId:");
-                  Scanner sc = new Scanner(System.in);
-                  MessageRequest messageRequest = new MessageRequest();
-                  String userId = sc.nextLine();
-                  messageRequest.setToUserId(userId);
-                  System.out.println("输入消息:");
-                  String line = sc.nextLine();
-                  messageRequest.setMessage(line);
-                  channel.writeAndFlush(messageRequest);
-                }
-              }
-            })
-        .start();
+    new MessageThread(channel).start();
   }
 }

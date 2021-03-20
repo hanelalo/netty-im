@@ -11,9 +11,10 @@ import org.hanelalo.netty.protocol.PacketCodeC;
 public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponse> {
 
   @Override
-  public void channelActive(ChannelHandlerContext ctx) {
+  public void channelActive(ChannelHandlerContext ctx) throws Exception {
     ByteBuf byteBuffer = getByteBuffer();
     ctx.channel().writeAndFlush(byteBuffer);
+    super.channelActive(ctx);
   }
 
   @Override
@@ -30,5 +31,4 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
     packet.setPassword("123456");
     return PacketCodeC.INSTANCE.encode(packet);
   }
-
 }

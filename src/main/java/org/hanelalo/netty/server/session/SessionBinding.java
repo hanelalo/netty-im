@@ -6,6 +6,9 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import org.hanelalo.netty.Attributes;
 
+/**
+ * Session 管理
+ */
 public class SessionBinding {
 
   private static final Map<String, Channel> USERID_CHANNEL_MAP = new ConcurrentHashMap<>();

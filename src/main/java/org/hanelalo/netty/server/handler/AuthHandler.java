@@ -1,10 +1,17 @@
 package org.hanelalo.netty.server.handler;
 
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.hanelalo.netty.server.session.SessionBinding;
 
+/**
+ * 登录验证
+ */
+@Sharable
 public class AuthHandler extends ChannelInboundHandlerAdapter {
+
+  public static final AuthHandler INSTANCE = new AuthHandler();
 
   @Override
   public void handlerAdded(ChannelHandlerContext ctx) throws Exception {

@@ -4,6 +4,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
 
+/**
+ * 空闲超时处理器
+ */
 public class ClientIdleStateHandler extends IdleStateHandler {
 
   public ClientIdleStateHandler(
